@@ -6,6 +6,7 @@ import tensorflow_addons as tfa
 import cv2
 import argparse
 from tqdm import tqdm
+from datetime import datetime
 
 ORIG_WIDTH = 0
 ORIG_HEIGHT = 0
@@ -152,7 +153,13 @@ def use_warp_maps(origins, targets, fps, steps):
     trg_strength = tf.reverse(org_strength, axis = [0])
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    video = cv2.VideoWriter('morph/morph.mp4', fourcc, fps, (ORIG_WIDTH, ORIG_HEIGHT))
+
+    # Generate time-stamp for automatic naming
+    now = datetime.now()
+    timestamp = now.strftime("%b-%d-%Y-%H:%M:%S")
+
+    output_video_filename = 'morph/' + timestamp + '.mp4'
+    video = cv2.VideoWriter(output_video_filename, fourcc, fps, (ORIG_WIDTH, ORIG_HEIGHT))
 
     res_img = np.zeros((im_sz * 3, im_sz * (STEPS // 10), 3), dtype = np.uint8)
 
@@ -182,7 +189,7 @@ def use_warp_maps(origins, targets, fps, steps):
 
     cv2.destroyAllWindows()
     video.release()
-    print ('Result video saved.')
+    print ('Result video saved at [', output_video_filename, ']' )
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
