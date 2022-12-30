@@ -18,6 +18,13 @@ Provided by [@chigozienri]( https://github.com/chigozienri ). Can also generated
 
 ## Usage
 
+Set up virtual environment:
+
+```bash
+virtualenv -p python3 venv # This creates a folder venv/.
+source venv/bin/activate
+```
+
 Install proper dependencies:
 
 ```
