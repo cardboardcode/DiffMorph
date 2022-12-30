@@ -158,7 +158,7 @@ def use_warp_maps(origins, targets, fps, steps):
 
     # Generate time-stamp for automatic naming
     now = datetime.now()
-    timestamp = now.strftime("%b-%d-%Y-%H:%M:%S")
+    timestamp = now.strftime("%b-%d-%Y-%H-%M-%S")
 
     # Check if output directory is missing
     # If true, create output directory.
