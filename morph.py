@@ -3,6 +3,7 @@
 import numpy as np
 import tensorflow as tf
 import tensorflow_addons as tfa
+import os
 import cv2
 import argparse
 from tqdm import tqdm
@@ -10,7 +11,8 @@ from datetime import datetime
 
 ORIG_WIDTH = 0
 ORIG_HEIGHT = 0
-TRAIN_EPOCHS = 1000
+# TRAIN_EPOCHS = 1000
+TRAIN_EPOCHS = 10
 
 im_sz = 1024
 mp_sz = 96
@@ -158,7 +160,13 @@ def use_warp_maps(origins, targets, fps, steps):
     now = datetime.now()
     timestamp = now.strftime("%b-%d-%Y-%H:%M:%S")
 
-    output_video_filename = 'morph/' + timestamp + '.mp4'
+    # Check if output directory is missing
+    # If true, create output directory.
+    if not os.path.exists("output"):
+        print("[ output/ ] - NOTFOUND. Creating...")
+        os.mkdir(os.getcwd() + '/output/')
+
+    output_video_filename = 'output/' + timestamp + '.mp4'
     video = cv2.VideoWriter(output_video_filename, fourcc, fps, (ORIG_WIDTH, ORIG_HEIGHT))
 
     res_img = np.zeros((im_sz * 3, im_sz * (STEPS // 10), 3), dtype = np.uint8)
